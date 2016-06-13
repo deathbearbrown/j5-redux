@@ -1,0 +1,28 @@
+{
+  "name": "simon",
+  "version": "0.0.0",
+  "description": "Tessel project",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --compilers js:babel-register --recursive",
+    "blah": "babel-node blah.js"
+  },
+  "repository": "https://github.com/deathbearbrown/simon.git",
+  "keywords": [
+    "Tessel"
+  ],
+  "license": "MIT",
+  "readme": "A bare bones Tessel 2 blinky script.",
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-register": "^6.9.0",
+    "chai": "^3.5.0",
+    "install": "^0.8.1",
+    "johnny-five": "^0.9.56",
+    "jshint": "^2.9.2",
+    "mocha": "^2.5.3",
+    "npm": "^3.9.5",
+    "redux": "^3.5.2"
+  }
+}
