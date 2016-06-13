@@ -1,4 +1,4 @@
-var expect = require('chai').expect;
+import { expect } from 'chai';
 import * as actions from '../app/actions/ledActions'
 import types from '../app/constants/actionTypes'
 

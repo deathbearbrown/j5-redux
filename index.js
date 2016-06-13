@@ -1,13 +1,10 @@
-// Import the interface to Tessel hardware
-var tessel = require('tessel');
-
-// Turn one of the LEDs on to start.
-tessel.led[2].on();
-
-// Blink!
-setInterval(function () {
-  tessel.led[2].toggle();
-  tessel.led[3].toggle();
-}, 100);
-
-console.log("I'm blinking! (Press CTRL + C to stop)");
+var five = require("johnny-five");
+var Tessel = require("tessel-io");
+var board = new five.Board({
+  io: new Tessel()
+});
+// 5
+board.on("ready", function() {
+  var led = new five.Led("a0");
+  led.blink(500);
+});
