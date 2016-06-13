@@ -1,14 +1,15 @@
-import { expect } from 'chai';
-import * as actions from '../app/actions/ledActions'
-import types from '../app/constants/actionTypes'
+'use strict';
+var expect = require('chai').expect;
+var actions = require('../app/actions/ledActions');
+var types = require('../app/constants/actionTypes');
 
 describe('actions', () => {
-  it('should create an action to turn on an led', () => {
-    const boolean = true;
-    const expectedAction = {
+  it('should create an action to turn on an led', function() {
+    var boolean = true;
+    var expectedAction = {
       type: types.LED_ON,
-      boolean
+      on: boolean
     }
-    expect(actions.on(boolean)).to.eql(expectedAction)
-  })
+    expect(actions.on(boolean)).to.eql(expectedAction);
+  });
 })

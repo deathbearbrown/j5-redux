@@ -1,6 +1,7 @@
-import { combineReducers } from 'redux-immutable';
+'use strict';
+var combineReducers = require('redux-immutable').combineReducers;
 
-export default combineReducers({
+module.exports = combineReducers({
   led: require('./led'),
   piezo: require('./piezo'),
   game: require('./game'),

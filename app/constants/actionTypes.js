@@ -1,4 +1,5 @@
-export default {
+'use strict';
+module.exports = {
   // Defaults
   LED_ON: 'LED_ON',
   SET_LED_BLINK: 'SET_LED_BLINK',

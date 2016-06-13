@@ -1,6 +1,11 @@
-export function on(boolean) {
+'use strict';
+function on(boolean) {
   return {
     type: 'LED_ON',
-    boolean
-  }
+    on: boolean
+  };
 }
+
+module.exports = {
+  on: on
+};
