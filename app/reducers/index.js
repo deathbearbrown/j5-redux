@@ -1,8 +1,7 @@
 'use strict';
-var combineReducers = require('redux-immutable').combineReducers;
+var combineReducers = require('redux').combineReducers;
 
 module.exports = combineReducers({
-  led: require('./led'),
-  piezo: require('./piezo'),
-  game: require('./game'),
+  leds: require('./led'),
+  sensor: require('./sensor')
 });

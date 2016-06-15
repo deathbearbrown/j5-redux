@@ -20,6 +20,7 @@
     "johnny-five": "^0.9.56",
     "mocha": "^2.5.3",
     "npm": "^3.9.5",
+    "object-assign": "^4.1.0",
     "redux": "^3.5.2",
     "tessel-io": "^0.6.1"
   }

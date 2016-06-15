@@ -1,11 +1,21 @@
 'use strict';
-function on(boolean) {
+function on(data) {
   return {
-    type: 'LED_ON',
-    on: boolean
+    type: 'ON_LED',
+    id: data.id,
+    on: data.on
+  };
+}
+
+function addLed(data) {
+  return {
+    type: 'ADD_LED',
+    pin: data.pin,
+    id: data.store_key
   };
 }
 
 module.exports = {
-  on: on
+  on: on,
+  addLed: addLed
 };

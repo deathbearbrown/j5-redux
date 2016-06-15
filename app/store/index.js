@@ -1,9 +1,7 @@
 'use strict';
 var configureStore = require('./configureStore');
 var defaultState = {
-  led_on: false,
-  blink: false,
-  start_game: false,
-  end_game: false,
+  sensor: null,
+  leds:[]
 };
 module.exports = configureStore(defaultState);
