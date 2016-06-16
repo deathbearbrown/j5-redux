@@ -5,36 +5,34 @@ var addLed = require('../actions/ledActions').addLed;
 var onLed = require('../actions/ledActions').on;
 
 /**
- * Lights class
- * @param {array} pin on the board
- * @param {number} frequency
- */
-
-
-/**
- * ALL OF THIS IS GROSS AND NEEDS TO BE REFACTORED
+ * Lights Class
+ * Instantiates LEDs in Johnny Five
+ * Inserts references of LED and it's ON or BLINK state in redux
+ * Subscribes to changes in redux state & triggers actions on j5
+ *
+ * @param {array} array of id and pins to be instantiated for the app
+ * @returns {Class Lights} returns the Lights class
  */
 
 var Lights = function(pinsArray) {
   this.leds = {};
   this.state = {
-    sensors: null,
     leds: null
   };
 
   this.setUpLeds(pinsArray);
-
-  // subscribe to sensor
-  this.unsubscribeSensor = store.subscribe(this.sensorListenerEvents.bind(this));
-  this.sensorListenerEvents();
-
   this.unsubscribeLeds = store.subscribe(this.ledListenerEvents.bind(this));
   this.ledListenerEvents();
 
   return this;
 };
 
-
+/**
+ * Set Up Leds
+ * instantiate j5 led
+ * Push led state to redux
+ * @param {Array} pinsArray array of id and pins to be instantiated for the app
+ */
 Lights.prototype.setUpLeds = function(pinsArray){
   var newLed;
     // type cast pinsArray?
@@ -53,51 +51,34 @@ Lights.prototype.setUpLeds = function(pinsArray){
   }
 };
 
-Lights.prototype.getSensorState = function(state) {
-  return state.sensor.level;
-};
-
+/**
+ * Get Leds State
+ * @param  {object} redux state
+ * @returns {array} led array
+ */
 Lights.prototype.getLedsState = function(state) {
   return state.leds;
 };
 
-Lights.prototype.sensorListenerEvents = function() {
-  var previousValue = this.state.sensors;
-  this.state.sensors = this.getSensorState(store.getState());
 
-  if (previousValue !== this.state.sensors) {
-    if (this.state.sensors && this.state.sensors > 500){
-      store.dispatch(onLed({id:"green", on: true}));
-      store.dispatch(onLed({id:"red", on: false}));
-    } else {
-      store.dispatch(onLed({id:"green", on: false}));
-      store.dispatch(onLed({id:"red", on: true}));
-    }
-    console.log('SENSOR', previousValue, 'to', this.state.sensors);
-  }
-};
-
+/**
+ * Register LED listerner
+ * Check for changes in redux state and change J5 LED based on change
+ *
+ */
 Lights.prototype.ledListenerEvents = function() {
   var previousValue = this.state.leds;
-  this.state.leds = this.getLedsState(store.getState());
-  // THIS IS GROSS ----
-  if (previousValue && previousValue[0].on !== this.state.leds[0].on) {
-    var greenState = this.state.leds[0].on ? 'on' : 'off';
-    console.log('turn green:', greenState);
-    this.leds.green[greenState]();
-  }
-
-  if (previousValue && previousValue[1].on !== this.state.leds[1].on) {
-    var redState = this.state.leds[1].on ? 'on' : 'off';
-    console.log('turn red:', redState);
-    this.leds.red[redState]();
+  var current = this.state.leds = this.getLedsState(store.getState());
+  if (previousValue) {
+    for (var i =0; current.length > i; i++){
+       if (previousValue && previousValue[i].on !== current[i].on) {
+        var ledId = current[i].id;
+        var ledState = current[i].on ? 'on' : 'off';
+        this.leds[ledId][ledState]();
+        console.log('Turn ' + ledId + ':' + ledState);
+       }
+    }
   }
 };
 
-
-
 module.exports = Lights;
-
-// store.subscribe() // Register a listener which is called on every state change. Returns unsubscribe.
-// store.dispatch()// Dispatch an action
-// store.getState() // Get the current state of the store

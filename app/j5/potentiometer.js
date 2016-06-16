@@ -7,7 +7,7 @@ var setSensor = require('../actions/setSensor');
  * Potentiometer sensor class
  * @param {string} pin on the board
  * @param {number} frequency -
- * @returns {object} Potentiometer class
+ * @returns {Class Potentiometer} Potentiometer class
  */
 
 var Potentiometer = function(pin, frequency, threshold) {
@@ -18,19 +18,23 @@ var Potentiometer = function(pin, frequency, threshold) {
   });
 
   this.setUpStoreEvents();
-
   return this;
 };
 
+/**
+ * Dispatch input from sensor into redux
+ */
 Potentiometer.prototype.setUpStoreEvents = function() {
   this.potentiometer.on('data', function() {
     store.dispatch(setSensor(this.value));
   });
 };
 
+/**
+ * Helper method for reading redux from repl
+ */
 Potentiometer.prototype.logStore = function() {
   console.log(store.getState('sensor'));
 };
-
 
 module.exports = Potentiometer;
