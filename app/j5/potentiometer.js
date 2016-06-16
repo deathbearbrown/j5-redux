@@ -7,6 +7,7 @@ var setSensor = require('../actions/setSensor');
  * Potentiometer sensor class
  * @param {string} pin on the board
  * @param {number} frequency -
+ * @param {number} threshold -
  * @returns {Class Potentiometer} Potentiometer class
  */
 

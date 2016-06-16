@@ -14,6 +14,10 @@ module.exports = {
   // START_GAME: 'START_GAME',
   // END_GAME: 'END_GAME',
 
+  // Button ----
+  ADD_BUTTON: 'ADD_BUTTON',
+  SET_BUTTON: 'SET_BUTTON',
+
   // Sensors ----
   SET_SENSOR: 'SET_SENSOR'
 
