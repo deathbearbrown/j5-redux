@@ -10,9 +10,8 @@ module.exports = {
   // PLAY_D4: 'PLAY_D4',
   // PLAY_G4: 'PLAY_G4',
 
-  // Game On ----
-  // START_GAME: 'START_GAME',
-  // END_GAME: 'END_GAME',
+  // On Switch----
+  ON_SWITCH: 'ON_SWITCH',
 
   // Button ----
   ADD_BUTTON: 'ADD_BUTTON',

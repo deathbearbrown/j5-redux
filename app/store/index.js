@@ -3,6 +3,7 @@ var configureStore = require('./configureStore');
 var defaultState = {
   sensor: null,
   buttons: [],
-  leds: []
+  leds: [],
+  on: false
 };
 module.exports = configureStore(defaultState);

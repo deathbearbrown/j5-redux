@@ -12,7 +12,7 @@ function ledReducer(state, action) {
       id: action.id,
       on: false,
       blink: false,
-      brightness: 128,
+      brightness: null,
       pin: action.pin
     }].concat(state);
   }

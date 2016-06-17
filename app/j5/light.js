@@ -99,7 +99,8 @@ Lights.prototype.ledListenerEvents = function() {
           console.log('Turn ' + ledId + ': off  AND stop blink');
         }
       }
-      if (previousValue[i].brightness !== current[i].brightness) {
+      if (previousValue[i].brightness &&
+        previousValue[i].brightness !== current[i].brightness) {
         this.leds[ledId].brightness(current[i].brightness);
         console.log('Set brightness to: ' + current[i].brightness);
       }
