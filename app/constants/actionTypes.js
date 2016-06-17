@@ -2,7 +2,7 @@
 module.exports = {
   // LEDs ----------
   ADD_LED: 'ADD_LED',
-  ON_LED: 'ON_LED',
+  SET_LED: 'SET_LED',
 
   // PIEZO -------
   // PLAY_A4: 'PLAY_A4',

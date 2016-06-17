@@ -70,13 +70,37 @@ Lights.prototype.ledListenerEvents = function() {
   var previousValue = this.state.leds;
   var current = this.state.leds = this.getLedsState(store.getState());
   if (previousValue) {
-    for (var i =0; current.length > i; i++){
-       if (previousValue && previousValue[i].on !== current[i].on) {
+    for (var i =0; current.length > i; i++) {
+       if (previousValue &&
+          previousValue[i].on !== current[i].on ||
+          previousValue[i].blink !== current[i].blink) {
+
         var ledId = current[i].id;
-        var ledState = current[i].on ? 'on' : 'off';
-        this.leds[ledId][ledState]();
-        console.log('Turn ' + ledId + ':' + ledState);
-       }
+        if (current[i].on && previousValue[i].blink) {
+          // stop blink
+          this.leds[ledId].stop();
+          console.log('stop blink');
+        }
+        if (current[i].on) {
+          // turn on
+          this.leds[ledId].on();
+          console.log('Turn ' + ledId + ': on');
+        }
+
+        if (current[i].blink && !current[i].on){
+          // blink
+          this.leds[ledId].blink();
+          console.log('Blink ' + ledId + ': on');
+        }
+
+        if (!current[i].blink && !current[i].on) {
+          // turn off
+          this.leds[ledId].off();
+          // stop blink
+          this.leds[ledId].stop();
+          console.log('Turn ' + ledId + ': off  AND stop blink');
+        }
+      }
     }
   }
 };

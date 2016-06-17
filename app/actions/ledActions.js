@@ -1,9 +1,10 @@
 'use strict';
-function on(data) {
+function onBlink(data) {
   return {
-    type: 'ON_LED',
+    type: 'SET_LED',
     id: data.id,
-    on: data.on
+    on: data.on || false,
+    blink: data.blink || false
   };
 }
 
@@ -16,6 +17,6 @@ function addLed(data) {
 }
 
 module.exports = {
-  on: on,
+  onBlink: onBlink,
   addLed: addLed
 };

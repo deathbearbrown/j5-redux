@@ -11,17 +11,19 @@ function ledReducer(state, action) {
     return [{
       id: action.id,
       on: false,
+      blink: false,
       pin: action.pin
     }].concat(state);
   }
 
-  if (action.type === types.ON_LED){
+  if (action.type === types.SET_LED){
     return state.map(function(led) {
       return led.id === action.id ?
-        assign({}, led, { on: action.on }) :
+        assign({}, led, { on: action.on, blink: action.blink }) :
         led
     });
   }
+
   return state;
 }
 

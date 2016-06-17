@@ -1,7 +1,7 @@
 'use strict';
 var five = require('johnny-five');
 var store = require('../store');
-var onLed = require('../actions/ledActions').on;
+var onLed = require('../actions/ledActions').onBlink;
 var Potentiometer = require('./potentiometer');
 var Light = require('./light');
 
@@ -61,13 +61,19 @@ DialALight.prototype.sensorListenerEvents = function() {
 
   if (previousValue !== this.state.sensors) {
     var sensors = this.state.sensors;
-    if (sensors && sensors > 750){
+    if (sensors && sensors > 800){
       store.dispatch(onLed({id:"green", on: true}));
       store.dispatch(onLed({id:"red", on: false}));
-    } else if (sensors && sensors < 750 && sensors > 250) {
+    }
+    else if (sensors && sensors < 800 && sensors > 500) {
+      store.dispatch(onLed({id:"green", blink: true}));
+      store.dispatch(onLed({id:"red", on: false}));
+    }
+    else if (sensors && sensors < 500 && sensors > 250) {
       store.dispatch(onLed({id:"green", on: true}));
       store.dispatch(onLed({id:"red", on: true}));
-    } else {
+    }
+    else {
       store.dispatch(onLed({id:"green", on: false}));
       store.dispatch(onLed({id:"red", on: true}));
     }
