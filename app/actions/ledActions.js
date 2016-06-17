@@ -16,7 +16,18 @@ function addLed(data) {
   };
 }
 
+function setBrightness(data){
+  return {
+    type: 'SET_LED',
+    id: data.id,
+    on: false,
+    blink: false,
+    brightness: data.brightness
+  };
+}
+
 module.exports = {
   onBlink: onBlink,
-  addLed: addLed
+  addLed: addLed,
+  setBrightness: setBrightness
 };

@@ -70,10 +70,10 @@ Lights.prototype.ledListenerEvents = function() {
   var current = this.state.leds = this.getLedsState(store.getState());
   if (previousValue) {
     for (var i = 0; current.length > i; i++) {
+      var ledId = current[i].id;
       if (previousValue[i].on !== current[i].on ||
         previousValue[i].blink !== current[i].blink) {
 
-        var ledId = current[i].id;
         if (current[i].on && previousValue[i].blink) {
           // stop blink
           this.leds[ledId].stop();
@@ -98,6 +98,10 @@ Lights.prototype.ledListenerEvents = function() {
           this.leds[ledId].stop();
           console.log('Turn ' + ledId + ': off  AND stop blink');
         }
+      }
+      if (previousValue[i].brightness !== current[i].brightness) {
+        this.leds[ledId].brightness(current[i].brightness);
+        console.log('Set brightness to: ' + current[i].brightness);
       }
     }
   }
