@@ -21,11 +21,11 @@ function piezoReducer(state, action) {
     }].concat(state);
   }
 
-  if (action.type === types.ON_LED){
+  if (action.type === types.ON_LED) {
     return state.map(function(piezo) {
       return piezo.id === action.id ?
-        assign({}, piezo, { tones: action.tones }) :
-        piezo
+        assign({}, piezo, {tones: action.tones}) :
+        piezo;
     });
   }
   return state;

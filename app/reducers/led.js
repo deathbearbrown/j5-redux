@@ -16,11 +16,11 @@ function ledReducer(state, action) {
     }].concat(state);
   }
 
-  if (action.type === types.SET_LED){
+  if (action.type === types.SET_LED) {
     return state.map(function(led) {
       return led.id === action.id ?
-        assign({}, led, { on: action.on, blink: action.blink }) :
-        led
+        assign({}, led, {on: action.on, blink: action.blink}) :
+        led;
     });
   }
 

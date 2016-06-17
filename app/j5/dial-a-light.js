@@ -1,5 +1,4 @@
 'use strict';
-var five = require('johnny-five');
 var store = require('../store');
 var onLed = require('../actions/ledActions').onBlink;
 var Potentiometer = require('./potentiometer');
@@ -13,22 +12,22 @@ var Light = require('./light');
  * Yellow will light up for values between 250 and 750
  * Red will light up for values under 250
  */
-var DialALight = function(){
+var DialALight = function() {
   this.state = {
     sensors: null
-  }
+  };
 
-  this.potentiometer = new Potentiometer("a4", 2050);
+  this.potentiometer = new Potentiometer('a4', 2050);
   this.leds = new Light([
-      {
-        "store_key": "green",
-        "pin":"a2"
-      },
-      {
-        "store_key": "red",
-        "pin": "a3"
-      }
-    ]);
+    {
+      store_key: 'green',
+      pin: 'a2'
+    },
+    {
+      store_key: 'red',
+      pin: 'a3'
+    }
+  ]);
 
   // subscribe to sensor
   this.unsubscribeSensor = store.subscribe(this.sensorListenerEvents.bind(this));
@@ -62,20 +61,20 @@ DialALight.prototype.sensorListenerEvents = function() {
   if (previousValue !== this.state.sensors) {
     var sensors = this.state.sensors;
     if (sensors && sensors > 800){
-      store.dispatch(onLed({id:"green", on: true}));
-      store.dispatch(onLed({id:"red", on: false}));
+      store.dispatch(onLed({id: 'green', on: true}));
+      store.dispatch(onLed({id: 'red', on: false}));
     }
     else if (sensors && sensors < 800 && sensors > 500) {
-      store.dispatch(onLed({id:"green", blink: true}));
-      store.dispatch(onLed({id:"red", on: false}));
+      store.dispatch(onLed({id: 'green', blink: true}));
+      store.dispatch(onLed({id: 'red', on: false}));
     }
     else if (sensors && sensors < 500 && sensors > 250) {
-      store.dispatch(onLed({id:"green", on: true}));
-      store.dispatch(onLed({id:"red", on: true}));
+      store.dispatch(onLed({id: 'green', on: true}));
+      store.dispatch(onLed({id: 'red', on: true}));
     }
     else {
-      store.dispatch(onLed({id:"green", on: false}));
-      store.dispatch(onLed({id:"red", on: true}));
+      store.dispatch(onLed({id: 'green', on: false}));
+      store.dispatch(onLed({id: 'red', on: true}));
     }
   }
 };

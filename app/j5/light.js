@@ -2,7 +2,6 @@
 var five = require('johnny-five');
 var store = require('../store');
 var addLed = require('../actions/ledActions').addLed;
-var onLed = require('../actions/ledActions').on;
 
 /**
  * Lights Class
@@ -53,7 +52,7 @@ Lights.prototype.setUpLeds = function(pinsArray){
 
 /**
  * Get Leds State
- * @param  {object} redux state
+ * @param  {object} state - redux state
  * @returns {array} led array
  */
 Lights.prototype.getLedsState = function(state) {
@@ -70,10 +69,9 @@ Lights.prototype.ledListenerEvents = function() {
   var previousValue = this.state.leds;
   var current = this.state.leds = this.getLedsState(store.getState());
   if (previousValue) {
-    for (var i =0; current.length > i; i++) {
-       if (previousValue &&
-          previousValue[i].on !== current[i].on ||
-          previousValue[i].blink !== current[i].blink) {
+    for (var i = 0; current.length > i; i++) {
+      if (previousValue[i].on !== current[i].on ||
+        previousValue[i].blink !== current[i].blink) {
 
         var ledId = current[i].id;
         if (current[i].on && previousValue[i].blink) {
@@ -87,7 +85,7 @@ Lights.prototype.ledListenerEvents = function() {
           console.log('Turn ' + ledId + ': on');
         }
 
-        if (current[i].blink && !current[i].on){
+        if (current[i].blink && !current[i].on) {
           // blink
           this.leds[ledId].blink();
           console.log('Blink ' + ledId + ': on');

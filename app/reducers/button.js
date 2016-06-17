@@ -15,11 +15,11 @@ function buttonReducer(state, action) {
     }].concat(state);
   }
 
-  if (action.type === types.SET_BUTTON){
+  if (action.type === types.SET_BUTTON) {
     return state.map(function(button) {
       return button.id === action.id ?
-        assign({}, button, { status: action.status }) :
-        button
+        assign({}, button, {status: action.status}) :
+        button;
     });
   }
   return state;

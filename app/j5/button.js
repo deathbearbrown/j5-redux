@@ -1,31 +1,67 @@
 'use strict';
 var five = require('johnny-five');
 var store = require('../store');
-var setSensor = require('../actions/setSensor');
+var setButton = require('../actions/buttonActions').setButton;
+var addButton = require('../actions/buttonActions').addButton;
 
 /**
  * Button sensor class
- * @param {string} pin on the board
- * @param {boolean} invert - Invert the up and down values.
+ * @param {array} button objects
  * @returns {Class Button} Button class
  */
 
-var Button = function(pin, invert) {
-  this.button = new five.Button({
-    pin: pin,
-    invert: invert || false
-  });
+var Button = function(buttons) {
+  this.buttons = [];
 
-  this.setUpStoreEvents();
+  this.setUpButtons(buttons);
+
   return this;
 };
+
+Button.prototype.setUpButtons = function(buttons) {
+  var newButton;
+  for (var i = 0; i < buttons.length; i++) {
+    newButton = new five.Button({
+      pin: buttons[i].pin,
+      id: buttons[i].store_key,
+      invert: buttons[i].invert || false
+    });
+    // add to store
+    store.dispatch(addButton(buttons[i]));
+    // add events
+    this.addEvents(newButton, buttons[i].store_key);
+    // add to class cache
+    this.buttons[buttons[i].store_key] = newButton;
+  }
+}
 
 /**
  * Dispatch input from sensor into redux
  */
-Button.prototype.setUpStoreEvents = function() {
-  this.button.on('data', function() {
-    store.dispatch(setSensor(this.value));
+Button.prototype.addEvents = function(button, id) {
+  button.on('press', function() {
+    store.dispatch(setButton(
+      {
+        id: id,
+        status: 'press'
+      }
+    ));
+  });
+  button.on('hold', function() {
+    store.dispatch(setButton(
+      {
+        id: id,
+        status: 'hold'
+      }
+    ));
+  });
+  button.on('release', function() {
+    store.dispatch(setButton(
+      {
+        id: id,
+        status: 'release'
+      }
+    ));
   });
 };
 
@@ -33,7 +69,7 @@ Button.prototype.setUpStoreEvents = function() {
  * Helper method for reading redux from repl
  */
 Button.prototype.logStore = function() {
-  console.log(store.getState('button'));
+  console.log(store.getState('buttons').get('status'));
 };
 
 module.exports = Button;
