@@ -50,6 +50,19 @@ Lights.prototype.setUpLeds = function(pinsArray){
   }
 };
 
+/*
+var leds = new five.Leds([
+  { id: "red", pin: 3 },
+  { id: "green", pin: 5 },
+  { id: "blue", pin: 6 },
+]);
+leds.byId("red");
+
+ */
+
+
+
+
 /**
  * Get Leds State
  * @param  {object} state - redux state

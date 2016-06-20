@@ -7,7 +7,6 @@ var initialState = [];
 function buttonReducer(state, action) {
   state = state || initialState;
   if (action.type === types.ADD_BUTTON) {
-    console.log('action', action);
     return [{
       id: action.id,
       status: null,
