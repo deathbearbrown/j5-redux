@@ -1,19 +1,19 @@
 'use strict';
 require('./bootstrap');
-var Potentiometer = require('../app/j5/potentiometer');
+var Sensor = require('../app/j5-modules/sensor');
 
-describe('Potentiometer class', () => {
-  var potentiometer;
+describe('Sensor class', () => {
+  var sensor;
   var board;
 
   beforeEach(function() {
     board = newBoard();
-    potentiometer = new Potentiometer("a4", 2050, board);
+    sensor = new Sensor("a4", 2050, board);
   });
 
-  it('has a j5 potentiometer module', function(){
-    expect(potentiometer).to.have.property('potentiometer');
-    expect(potentiometer.potentiometer).to.be.an.instanceof(five.Sensor);
+  it('has a j5 sensor module', function(){
+    expect(sensor).to.have.property('sensor');
+    expect(sensor.sensor).to.be.an.instanceof(five.Sensor);
   });
 
 });

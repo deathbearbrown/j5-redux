@@ -1,10 +1,10 @@
 "use strict";
 require("./bootstrap");
 
-var Lights = require("../app/j5/light");
+var Leds = require("../app/j5-modules/led");
 
 describe("Light class", () => {
-  var lights;
+  var leds;
   var board;
   var stubs = {};
   var spies = {};
@@ -13,13 +13,13 @@ describe("Light class", () => {
     board = newBoard();
 
     spies.Led = sandbox.spy(five, "Led");
-    stubs.ledListenerEvents = sandbox.stub(Lights.prototype, "ledListenerEvents");
+    stubs.ledListenerEvents = sandbox.stub(Leds.prototype, "ledListenerEvents");
 
-    lights = new Lights([{
-      store_key: "green",
+    leds = new Leds([{
+      id: "green",
       pin: "a2"
     }, {
-      store_key: "red",
+      id: "red",
       pin: "a3"
     }]);
   });
@@ -28,8 +28,8 @@ describe("Light class", () => {
     cleanup();
   });
 
-  it("lights have an leds property", function() {
-    expect(lights).to.have.property("leds");
+  it("leds have an leds property", function() {
+    expect(leds).to.have.property("leds");
   });
 
   it("Initialized two Led instances", function() {
@@ -42,17 +42,17 @@ describe("Light class", () => {
 
   it("setUpLeds is called with array of stuff", function() {
 
-    stubs.setUpLeds = sandbox.stub(Lights.prototype, "setUpLeds");
+    stubs.setUpLeds = sandbox.stub(Leds.prototype, "setUpLeds");
 
     var stuff = [{
-      store_key: "green",
+      id: "green",
       pin: "a2"
     }, {
-      store_key: "red",
+      id: "red",
       pin: "a3"
     }];
 
-    lights = new Lights(stuff);
+    leds = new Leds(stuff);
 
     expect(stubs.setUpLeds.callCount).to.equal(1);
     expect(stubs.setUpLeds.lastCall.args[0]).to.eql(stuff);

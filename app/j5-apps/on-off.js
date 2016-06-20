@@ -1,25 +1,25 @@
 'use strict';
 var store = require('../store');
 var on = require('../actions/onSwitch');
-var onLed = require('../actions/ledActions').onBlink;
-var Buttons = require('./button');
-var Light = require('./light');
+var onLed = require('../actions/ledActions').on;
+var Buttons = require('../j5-modules/button');
+var Leds = require('../j5-modules/led');
 
 var ButtonLight = function() {
   this.state = {
     buttons: null,
     on: false
   };
-  this.leds = new Light([
+  this.leds = new Leds([
     {
-      store_key: 'red',
+      id: 'red',
       pin: 'a6'
     }
   ]);
 
   this.buttons = new Buttons([
     {
-      store_key: 'white_button',
+      id: 'white_button',
       pin: 'b2'
     }
   ]);

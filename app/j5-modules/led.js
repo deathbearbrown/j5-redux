@@ -4,16 +4,16 @@ var store = require('../store');
 var addLed = require('../actions/ledActions').addLed;
 
 /**
- * Lights Class
+ * Leds Class
  * Instantiates LEDs in Johnny Five
  * Inserts references of LED and it's ON or BLINK state in redux
  * Subscribes to changes in redux state & triggers actions on j5
  *
  * @param {array} array of id and pins to be instantiated for the app
- * @returns {Class Lights} returns the Lights class
+ * @returns {Class Leds} returns the Leds class
  */
 
-var Lights = function(pinsArray) {
+var Leds = function(pinsArray) {
   this.leds = {};
   this.state = {
     leds: null
@@ -32,18 +32,18 @@ var Lights = function(pinsArray) {
  * Push led state to redux
  * @param {Array} pinsArray array of id and pins to be instantiated for the app
  */
-Lights.prototype.setUpLeds = function(pinsArray){
+Leds.prototype.setUpLeds = function(pinsArray){
   var newLed;
     // type cast pinsArray?
   for (var i = 0; pinsArray.length > i; i++) {
     // create new LED
     newLed = new five.Led({
       pin: pinsArray[i].pin,
-      id: pinsArray[i].store_key
+      id: pinsArray[i].id
     });
 
     // store reference on array in class
-    this.leds[pinsArray[i].store_key] = newLed;
+    this.leds[pinsArray[i].id] = newLed;
 
     // store in state
     store.dispatch(addLed(pinsArray[i]));
@@ -68,7 +68,7 @@ leds.byId("red");
  * @param  {object} state - redux state
  * @returns {array} led array
  */
-Lights.prototype.getLedsState = function(state) {
+Leds.prototype.getLedsState = function(state) {
   return state.leds;
 };
 
@@ -78,7 +78,7 @@ Lights.prototype.getLedsState = function(state) {
  * Check for changes in redux state and change J5 LED based on change
  *
  */
-Lights.prototype.ledListenerEvents = function() {
+Leds.prototype.ledListenerEvents = function() {
   var previousValue = this.state.leds;
   var current = this.state.leds = this.getLedsState(store.getState());
   if (previousValue) {
@@ -121,4 +121,4 @@ Lights.prototype.ledListenerEvents = function() {
   }
 };
 
-module.exports = Lights;
+module.exports = Leds;

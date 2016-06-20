@@ -7,7 +7,6 @@ var initialState = [];
 function ledReducer(state, action) {
   state = state || initialState;
   if (action.type === types.ADD_LED) {
-    console.log('action', action);
     return [{
       id: action.id,
       on: false,

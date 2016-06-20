@@ -1,8 +1,8 @@
 'use strict';
 var store = require('../store');
 var setBrightness = require('../actions/ledActions').setBrightness;
-var Potentiometer = require('./potentiometer');
-var Light = require('./light');
+var Sensor = require('../j5-modules/potentiometer');
+var Leds = require('../j5-modules/led');
 
 
 var DialABright = function() {
@@ -10,10 +10,10 @@ var DialABright = function() {
     sensors: null
   };
 
-  this.potentiometer = new Potentiometer('a4', 2050);
-  this.leds = new Light([
+  this.potentiometer = new Sensor('a4', 2050);
+  this.leds = new Leds([
     {
-      store_key: 'red',
+      id: 'red',
       pin: 'a6'
     }
   ]);

@@ -1,8 +1,8 @@
 'use strict';
 var store = require('../store');
-var onLed = require('../actions/ledActions').onBlink;
-var Potentiometer = require('./potentiometer');
-var Light = require('./light');
+var onLed = require('../actions/ledActions').on;
+var Sensor = require('../j5-modules/potentiometer');
+var Leds = require('../j5-modules/led');
 
 /**
  * Dial A Light is an app that changes the color of a Bipolar, Tri-color LED
@@ -17,14 +17,14 @@ var DialALight = function() {
     sensors: null
   };
 
-  this.potentiometer = new Potentiometer('a4', 2050);
-  this.leds = new Light([
+  this.potentiometer = new Sensor('a4', 2050);
+  this.leds = new Leds([
     {
-      store_key: 'green',
+      id: 'green',
       pin: 'a2'
     },
     {
-      store_key: 'red',
+      id: 'red',
       pin: 'a3'
     }
   ]);

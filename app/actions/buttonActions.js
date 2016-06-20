@@ -11,7 +11,7 @@ function addButton(data) {
   return {
     type: 'ADD_BUTTON',
     pin: data.pin,
-    id: data.store_key
+    id: data.id
   };
 }
 

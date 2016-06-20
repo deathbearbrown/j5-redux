@@ -12,7 +12,7 @@ function addLed(data) {
   return {
     type: 'ADD_LED',
     pin: data.pin,
-    id: data.store_key
+    id: data.id
   };
 }
 
@@ -27,7 +27,8 @@ function setBrightness(data){
 }
 
 module.exports = {
-  onBlink: onBlink,
+  on: onBlink,
+  blink: onBlink,
   addLed: addLed,
   setBrightness: setBrightness
 };

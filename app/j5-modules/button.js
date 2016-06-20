@@ -23,15 +23,15 @@ Button.prototype.setUpButtons = function(buttons) {
   for (var i = 0; i < buttons.length; i++) {
     newButton = new five.Button({
       pin: buttons[i].pin,
-      id: buttons[i].store_key,
+      id: buttons[i].id,
       invert: buttons[i].invert || false
     });
     // add to store
     store.dispatch(addButton(buttons[i]));
     // add events
-    this.addEvents(newButton, buttons[i].store_key);
+    this.addEvents(newButton, buttons[i].id);
     // add to class cache
-    this.buttons[buttons[i].store_key] = newButton;
+    this.buttons[buttons[i].id] = newButton;
   }
 }
 

@@ -4,15 +4,15 @@ var store = require('../store');
 var setSensor = require('../actions/setSensor');
 
 /**
- * Potentiometer sensor class
+ * Sensor sensor class
  * @param {string} pin on the board
  * @param {number} frequency -
  * @param {number} threshold -
- * @returns {Class Potentiometer} Potentiometer class
+ * @returns {Class Sensor} Sensor class
  */
 
-var Potentiometer = function(pin, frequency, threshold) {
-  this.potentiometer = new five.Sensor({
+var Sensor = function(pin, frequency, threshold) {
+  this.sensor = new five.Sensor({
     pin: pin,
     freq: frequency || 250,
     threshold: threshold || 10
@@ -25,8 +25,8 @@ var Potentiometer = function(pin, frequency, threshold) {
 /**
  * Dispatch input from sensor into redux
  */
-Potentiometer.prototype.setUpStoreEvents = function() {
-  this.potentiometer.on('data', function() {
+Sensor.prototype.setUpStoreEvents = function() {
+  this.sensor.on('data', function() {
     store.dispatch(setSensor(this.value));
   });
 };
@@ -34,8 +34,8 @@ Potentiometer.prototype.setUpStoreEvents = function() {
 /**
  * Helper method for reading redux from repl
  */
-Potentiometer.prototype.logStore = function() {
+Sensor.prototype.logStore = function() {
   console.log(store.getState('sensor'));
 };
 
-module.exports = Potentiometer;
+module.exports = Sensor;
