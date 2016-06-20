@@ -19,9 +19,11 @@
     "install": "^0.8.1",
     "johnny-five": "^0.9.56",
     "mocha": "^2.5.3",
+    "mock-firmata": "0.0.7",
     "npm": "^3.9.5",
     "object-assign": "^4.1.0",
     "redux": "^3.5.2",
+    "sinon": "^1.17.4",
     "tessel-io": "^0.6.1"
   }
 }

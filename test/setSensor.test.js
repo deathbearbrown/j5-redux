@@ -1,5 +1,5 @@
 'use strict';
-var expect = require('chai').expect;
+require('./bootstrap');
 var action = require('../app/actions/setSensor');
 var types = require('../app/constants/actionTypes');
 

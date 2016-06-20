@@ -1,12 +1,13 @@
 'use strict';
-var expect = require('chai').expect;
-var five = require('johnny-five');
+require('./bootstrap');
 var Potentiometer = require('../app/j5/potentiometer');
 
 describe('Potentiometer class', () => {
   var potentiometer;
+  var board;
+
   beforeEach(function() {
-    var board = new five.Board();
+    board = newBoard();
     potentiometer = new Potentiometer("a4", 2050, board);
   });
 
