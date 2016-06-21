@@ -1,10 +1,8 @@
 'use strict';
 var five = require("johnny-five");
-var Tessel = require("tessel-io");
-var App = require('./app/j5-apps/dial-a-bright');
-var board = new five.Board({
-  io: new Tessel()
-});
+var App = require('./app/j5-apps/test-generic-input');
+
+var board = new five.Board();
 
 board.on("ready", function() {
   var app = new App();

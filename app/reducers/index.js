@@ -5,5 +5,6 @@ module.exports = combineReducers({
   buttons: require('./button'),
   leds: require('./led'),
   on: require('./onSwitch'),
-  sensor: require('./sensor')
+  sensor: require('./sensor'),
+  input: require('./input')
 });

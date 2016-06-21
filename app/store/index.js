@@ -4,6 +4,7 @@ var defaultState = {
   sensor: null,
   buttons: [],
   leds: [],
-  on: false
+  on: false,
+  input: {}
 };
 module.exports = configureStore(defaultState);
