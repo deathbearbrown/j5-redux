@@ -1,6 +1,6 @@
 'use strict';
 var five = require("johnny-five");
-var App = require('./app/j5-apps/test-generic-input');
+var App = require('./sample-project/test-generic-input');
 
 var board = new five.Board();
 

@@ -1,6 +1,6 @@
 'use strict';
-var store = require('../store');
-var Inputs = require('../j5-modules/input');
+var store = require('./store');
+var Inputs = require('./components/input');
 var isEqual = require('lodash.isequal');
 
 var Test = function() {
@@ -100,7 +100,7 @@ Test.prototype.buttonListenerEvents = function() {
   var currentW = this.state.buttons.white = this.getWhiteButtonsState(store.getState());
   if ( !isEqual(previousW, currentW)) {
     if (currentW.status === 'press'){
-      console.log('yo');
+      console.log('This white button is getting pressed!');
     }
   }
   //black button
@@ -108,7 +108,7 @@ Test.prototype.buttonListenerEvents = function() {
   var currentB = this.state.buttons.black = this.getBlackButtonsState(store.getState());
   if ( !isEqual(previousB, currentB)) {
     if (currentB.status === 'hold'){
-      console.log('hells no');
+      console.log('Holding down the Black Button');
     }
   }
 
@@ -117,7 +117,7 @@ Test.prototype.buttonListenerEvents = function() {
   var currentS = this.state.sensors.cool = this.getSensorState(store.getState());
   if ( !isEqual(previousS, currentS)) {
     if (currentS.level > 100 ){
-      console.log('cool times', currentS.level);
+      console.log('Potentiometer is 100 <', currentS.level);
     }
   }
 
