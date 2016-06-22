@@ -1,7 +1,9 @@
 'use strict';
 var store = require('./store');
-var Inputs = require('./components/input');
+var InitJ5 = require('./components/initJ5');
 var isEqual = require('lodash.isequal');
+
+var j5Store = 'J5';
 
 var Test = function() {
   this.state = {
@@ -9,9 +11,9 @@ var Test = function() {
     sensors: {}
   };
 
-  this.sensors = new Inputs({
+  this.sensors = new InitJ5({
       five: 'Sensor',
-      state: 'potentiometer',
+      store_name: 'potentiometer',
       args: [
         {
           id: 'cool',
@@ -32,9 +34,9 @@ var Test = function() {
       }]
   });
 
-  this.buttons = new Inputs({
+  this.buttons = new InitJ5({
       five: 'Button',
-      state: 'game_buttons',
+      store_name: 'game_buttons',
       args: [
         {
           id: 'white_button',
@@ -82,15 +84,18 @@ var Test = function() {
 };
 
 Test.prototype.getWhiteButtonsState = function(state) {
-  return state.input.game_buttons.white_button;
+  var buttonsKey = this.buttons.storeKey;
+  return state[j5Store][buttonsKey].white_button;
 };
 
 Test.prototype.getBlackButtonsState = function(state) {
-  return state.input.game_buttons.black_button;
+  var buttonsKey = this.buttons.storeKey;
+  return state[j5Store][buttonsKey].black_button;
 };
 
 Test.prototype.getSensorState = function(state) {
-  return state.input.potentiometer.cool;
+  var sensorsKey = this.sensors.storeKey;
+  return state[j5Store][sensorsKey].cool;
 };
 
 

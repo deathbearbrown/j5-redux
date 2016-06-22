@@ -2,5 +2,5 @@
 var combineReducers = require('redux').combineReducers;
 
 module.exports = combineReducers({
-  input: require('./input')
+  J5: require('./J5')
 });

@@ -4,15 +4,15 @@ var types = require('../constants/actionTypes');
 
 var initialState = {};
 
-function inputReducer(state, action) {
+function j5Reducer(state, action) {
   state = state || initialState;
-  if (action.type === types.ADD_INPUT) {
+  if (action.type === types.ADD_J5) {
     state[action.name] = state[action.name] || {};
     state[action.name][action.id] = action.data;
     return state;
   }
 
-  if (action.type === types.SET_INPUT) {
+  if (action.type === types.SET_J5) {
     state[action.name][action.id] = action.data;
     return state;
   }
@@ -20,4 +20,4 @@ function inputReducer(state, action) {
   return state;
 }
 
-module.exports = inputReducer;
+module.exports = j5Reducer;

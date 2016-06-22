@@ -1,6 +1,6 @@
 'use strict';
 var configureStore = require('./configureStore');
 var defaultState = {
-  input: {}
+  J5: {}
 };
 module.exports = configureStore(defaultState);
