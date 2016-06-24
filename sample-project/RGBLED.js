@@ -1,6 +1,6 @@
 'use strict';
 var store = require('./store');
-var InitJ5 = require('./components/initJ5');
+var InitJ5 = require('./util/initJ5');
 var isEqual = require('lodash.isequal');
 
 var j5Store = 'J5';
@@ -30,6 +30,8 @@ var Test = function() {
         intensity: 100
       }
     });
+
+  this.RGBled.components.led_rgb1.strobe();
 
   // this.buttons = new InitJ5({
   //     five: 'Button',

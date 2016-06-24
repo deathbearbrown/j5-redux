@@ -1,6 +1,7 @@
 // Unlocks useful features in Johnny-Five
 process.env.IS_TEST_MODE = true;
 
+// Third Party Deps
 global.expect = require("chai").expect;
 global.mocks = require("mock-firmata");
 
@@ -56,3 +57,8 @@ function cleanup() {
 
 global.newBoard = newBoard;
 global.cleanup = cleanup;
+
+
+// Internal/Module Deps
+//
+// global.initJ5 = require("../sample-project/util/initJ5");

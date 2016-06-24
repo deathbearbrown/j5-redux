@@ -1,7 +1,8 @@
 'use strict';
 var store = require('./store');
-var InitJ5 = require('./components/initJ5');
+var InitJ5 = require('./util/initJ5');
 var isEqual = require('lodash.isequal');
+var sensorsthing = require('sensorsthing')
 
 var j5Store = 'J5';
 
@@ -12,7 +13,7 @@ var Test = function() {
   };
 
   this.sensors = new InitJ5({
-      five: 'Sensor',
+      five: five.Sensor,
       store_name: 'potentiometer',
       args: [
         {
@@ -31,22 +32,27 @@ var Test = function() {
           key: 'level',
           value: 'value'
         }
-      }]
+      }],
+      listenerSubscribe: function(){
+        stuffffff;
+
+      }
   });
 
-  this.buttons = new InitJ5({
-      five: 'Button',
-      store_name: 'game_buttons',
-      args: [
-        {
+
+
+         var coolbutton = new five.Button({
           id: 'white_button',
           pin: '2'
-        },
-        {
-          id: 'black_button',
-          pin: '4'
-        }
-      ],
+        });
+        coolbutton.on('press', function(){
+          //mess up everything...
+        });
+
+  this.buttons = new InitJ5({
+      buttons: [coolbutton],
+      store_name: 'game_buttons',
+
       store_default_args: {
         status: null
       },
