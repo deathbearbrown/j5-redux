@@ -8,8 +8,10 @@ var setJ5Components = require('../boilerplate/actions/initJ5Actions').setJ5Compo
 
 describe("J5Components class", () => {
   var buttons;
+  var light;
   var board;
   var callback;
+  var lightCallback;
   var stubs = {};
   var spies = {};
 
@@ -21,18 +23,50 @@ describe("J5Components class", () => {
     spies.setUpRedux = sandbox.spy(InitJ5.initializers, "setUpRedux");
     spies.setUpEvents = sandbox.spy(InitJ5.initializers, "setUpEvents");
     spies.setUpListeners = sandbox.spy(InitJ5.initializers, "setUpListeners");
-    callback = sinon.spy();
 
-    buttons = new InitJ5(    {
+    callback = sinon.spy();
+    lightCallback = sinon.spy();
+
+    light = new InitJ5({
+      five: {
+        class: five.Led.RGB,
+        args: [
+          {
+            id: 'rgb',
+            pins: {
+              red: 6,
+              green: 5,
+              blue: 3
+            }
+          }
+        ]
+      },
+      store: {
+        name: 'game_light',
+        defaults: {
+          color: 'orange',
+          on: false,
+          blink: false
+        }
+      },
+      listenersSubscribe: {
+        color: function(val, j5) {
+          // on status change, do this
+          lightCallback();
+        }
+      }
+    });
+
+    buttons = new InitJ5({
       five: {
         class: five.Button,
         args: [
           {
-            id: 'white_button',
+            id: 'white',
             pin: 'b2'
           },
           {
-            id: 'black_button',
+            id: 'black',
             pin: 'b3'
           }
         ]
@@ -40,41 +74,51 @@ describe("J5Components class", () => {
       store: {
         name: 'game_buttons',
         defaults: {
-          id: null,
           status: null
         }
       },
       eventsDispatch: {
         press: function(button){
           store.dispatch(setJ5Components(
+            button.id,
             {
-              id: button.id,
               status: 'press'
-            }
+            },
+            'game_buttons'
           ));
         },
         hold: function(button){
           store.dispatch(setJ5Components(
+            button.id,
             {
-              id: button.id,
               status: 'hold'
-            }
+            },
+            'game_buttons'
           ));
         },
         release: function(button){
           store.dispatch(setJ5Components(
+            button.id,
             {
-              id: button.id,
               status: 'release'
-            }
+            },
+            'game_buttons'
           ));
         }
       },
       listenersSubscribe: {
         status: function(status, j5){
-          // huh
+          var data = {
+            on: false,
+            blink: false
+          };
           if (status === 'monkey'){
             callback();
+          }
+          if (status === 'testInteraction'){
+            data.color = j5.id;
+            data.on = true;
+            store.dispatch(setJ5Components('rgb', data, 'game_light'));
           }
         }
       }
@@ -105,28 +149,36 @@ describe("J5Components class", () => {
 
   it("it registers defaults for each component to the store under J5 and it's namespace", function() {
     var state = store.getState().J5.game_buttons;
-    expect(state).to.have.property("white_button");
-    expect(state).to.have.property("black_button");
+    expect(state).to.have.property("white");
+    expect(state).to.have.property("black");
   });
 
-  it("it calls setUpRedux once", function() {
-    expect(spies.setUpRedux.callCount).to.equal(1);
+  it("it calls setUpRedux once for each, buttons and light", function() {
+    expect(spies.setUpRedux.callCount).to.equal(2);
   });
 
   it("setUpEvents to be called twice, once for each button", function() {
     expect(spies.setUpEvents.callCount).to.equal(2);
   });
 
-  it("setUpListeners to be called once on init", function() {
-    expect(spies.setUpListeners.callCount).to.equal(1);
+  it("setUpListeners to be called twice for each????? BUG???", function() {
+    expect(spies.setUpListeners.callCount).to.equal(2);
   });
 
-  it("expect that if the dispatcher changes the state in redux, then the listener will fire", function() {
-    store.dispatch(setJ5Components('white_button', { status: 'monkey' }, 'game_buttons'));
-    var state = store.getState().J5.game_buttons.white_button;
+  it("if the dispatcher changes the state in redux, then the listener will fire", function() {
+    store.dispatch(setJ5Components('white', { status: 'monkey' }, 'game_buttons'));
+    var state = store.getState().J5.game_buttons.white;
     expect(state.status).to.equal('monkey');
     expect(callback.called).to.be.true;
   });
 
+  it("button listener will dispatch to light state, light listener will fire", function() {
+    store.dispatch(setJ5Components('white', { status: 'testInteraction' }, 'game_buttons'));
+    var state = store.getState().J5.game_buttons.white;
+    expect(state.status).to.equal('testInteraction');
 
+    var lightState = store.getState().J5.game_light.rgb;
+    expect(lightState.color).to.equal('white');
+    expect(lightCallback.called).to.be.true;
+  });
 });

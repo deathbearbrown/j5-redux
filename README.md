@@ -12,10 +12,10 @@ Also, because why not.
 
 Now it's time for choose your own documentation adventure.
 I have ...
-  - no experience with johnny give & hardware or redux
-  - no experience with johnny five & hardware, but have made apps with redux
-  - some experience with Johnny Five but don't know anything about redux
-  - I have experience with Johnny Five and Redux
+  - [no experience with johnny give & hardware or redux](#hello-world-hardware)
+  - [no experience with johnny five & hardware, but have made apps with redux](#hello-world-hardware)
+  - [some experience with Johnny Five but don't know anything about redux](#redux-why-what-is-it)
+  - [I have experience with Johnny Five and Redux](#lets-make-an-app)
 
 #### Hello World Hardware
 
