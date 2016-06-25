@@ -1,10 +1,10 @@
 "use strict";
 require("./bootstrap");
 
-var InitJ5 = require("../sample-project/util/initJ5");
-var store = require('../sample-project/store');
+var InitJ5 = require("../boilerplate/util/initJ5");
+var store = require('../boilerplate/store');
 var five = require('johnny-five');
-var setJ5Components = require('../sample-project/actions/initJ5Actions').setJ5Components;
+var setJ5Components = require('../boilerplate/actions/initJ5Actions').setJ5Components;
 
 describe("J5Components class", () => {
   var buttons;

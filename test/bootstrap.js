@@ -61,4 +61,4 @@ global.cleanup = cleanup;
 
 // Internal/Module Deps
 //
-// global.initJ5 = require("../sample-project/util/initJ5");
+// global.initJ5 = require("../boilerplate/util/initJ5");

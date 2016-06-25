@@ -1,7 +1,7 @@
 'use strict';
 require('./bootstrap');
-var actions = require('../sample-project/actions/initJ5Actions');
-var types = require('../sample-project/constants/actionTypes');
+var actions = require('../boilerplate/actions/initJ5Actions');
+var types = require('../boilerplate/constants/actionTypes');
 
 describe('initJ5 actions', () => {
   it('should create an action to change state of an initJ5', function() {
