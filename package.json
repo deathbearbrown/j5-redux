@@ -1,18 +1,18 @@
 {
-  "name": "simon",
+  "name": "j5-redux",
   "version": "0.0.0",
-  "description": "Tessel project",
+  "description": "A boilerplate for setting up a J5 & redux project",
   "main": "index.js",
   "scripts": {
     "test": "mocha --recursive",
     "lint": "eslint --ext .js app"
   },
-  "repository": "https://github.com/deathbearbrown/simon.git",
+  "repository": "https://github.com/deathbearbrown/j5-redux.git",
   "keywords": [
     "Tessel"
   ],
   "license": "MIT",
-  "readme": "A bare bones Tessel 2 blinky script.",
+  "readme": "A boilerplate for setting up a J5 & redux project",
   "devDependencies": {
     "chai": "^3.5.0",
     "eslint": "^1.10.3",
@@ -24,7 +24,6 @@
     "npm": "^3.9.5",
     "object-assign": "^4.1.0",
     "redux": "^3.5.2",
-    "sinon": "^1.17.4",
-    "tessel-io": "^0.6.1"
+    "sinon": "^1.17.4"
   }
 }
