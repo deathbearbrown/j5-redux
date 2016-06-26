@@ -1,5 +1,6 @@
 'use strict';
 var five = require('johnny-five');
+var store = require('./store');
 var InitJ5 = require('./util/initJ5');
 var Pieman = require('./pieman');
 var setJ5 = require('./actions/initJ5Actions').setJ5Components;
@@ -37,28 +38,32 @@ var GameSetup = {
       store: {
         name: 'game_light',
         defaults: {
-          color: "#ffffff",
+          color: "red",
           on: false,
           blink: false
         }
       },
       listenersSubscribe: {
-        color: function(val, j5) {
-          // on status change, do this
-          j5.color(val);
+        color: function(state, j5) {
+          if (state.color){
+            j5.color(state.color);
+          }
         },
-        on: function(val, j5) {
-          if (val){
+        on: function(state, j5) {
+          console.log(state);
+          if (state.on){
+            j5.color(state.color);
             j5.on();
+          } else {
+            j5.off();
           }
-          j5.stop().off();
-
         },
-        blink: function(val, j5){
-          if (val){
+        blink: function(state, j5){
+          if (state.blink){
             j5.blink();
+          } else {
+            j5.stop().off();
           }
-          j5.stop().off();
         }
       }
     });
@@ -76,48 +81,50 @@ var GameSetup = {
         args: [
           {
             id: 'red',
-            pin: '2'
+            pin: '13'
           },
           {
             id: 'yellow',
-            pin: '3'
+            pin: '12'
           },
           {
             id: 'green',
-            pin: '4'
+            pin: '8'
           },
           {
             id: 'blue',
-            pin: '5'
+            pin: '7'
           }
         ]
       },
       store: {
         name: 'game_buttons',
         defaults: {
-          status: null
+          status: 'booga'
         }
       },
       eventsDispatch: {
-        press: function(button){
+        press: function(){
           store.dispatch(setJ5(
+            this.id,
             {
-              id: button.id,
               status: 'press'
-            }
+            },
+            'game_buttons'
           ));
         },
-        release: function(button){
+        release: function(){
           store.dispatch(setJ5(
+            this.id,
             {
-              id: button.id,
               status: 'release'
-            }
+            },
+            'game_buttons'
           ));
         }
       },
       listenersSubscribe: {
-        status: function(val, j5) {
+        status: function(state, j5) {
           // could make a map to match Id to another id but
           // for now this I am just using color
           var colorId = j5.id;
@@ -125,7 +132,7 @@ var GameSetup = {
               on: false,
               blink: false
             };
-          if (val === 'press'){
+          if (state.status === 'press'){
             data.color = colorId;
             data.on = true;
           }

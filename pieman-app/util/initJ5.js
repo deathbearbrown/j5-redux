@@ -27,8 +27,6 @@ var initializers = {
     var fiveClass = five.class,
         j5_objects = {},
         newJ5Component;
-    console.log(fiveClass);
-
     for (var i = 0; i < five.args.length; i++) {
       newJ5Component = new fiveClass(five.args[i]);
       // add to class cache
@@ -43,7 +41,6 @@ var initializers = {
    * @param {Johnny Five Module} five  reference to a J5 module (led, sensor etc)
    */
   setUpEvents: function(events, five){
-    console.log(this.store_name, 'events');
     for (var key in events){
       five.on(key, events[key]);
     }
@@ -77,7 +74,7 @@ var initializers = {
           var val = listeningOn[x];
           if (current[val] !== previous[val]){
             // pass the status & the five object to the listener
-            listeners[val](current[val], this.j5_objects[elementId]);
+            listeners[val](current, this.j5_objects[elementId]);
           }
         }
       }
@@ -171,7 +168,7 @@ var Component = function(spec){
   // set up events for each j5 object ----------------------------
   if (spec.eventsDispatch) {
     for (var key in this.j5_objects) {
-      initializers.setUpEvents(spec.eventsDispatch, this.j5_objects[key]);
+      initializers.setUpEvents.bind(this)(spec.eventsDispatch, this.j5_objects[key]);
     }
   }
   // set up subscribers ------------------------------------------

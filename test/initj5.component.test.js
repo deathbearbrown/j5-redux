@@ -48,12 +48,6 @@ describe("J5Components class", () => {
           on: false,
           blink: false
         }
-      },
-      listenersSubscribe: {
-        color: function(val, j5) {
-          // on status change, do this
-          lightCallback();
-        }
       }
     });
 
