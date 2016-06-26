@@ -45,17 +45,19 @@ var GameSetup = {
       },
       listenersSubscribe: {
         color: function(state, j5) {
-          if (state.color){
+          console.log(state.color);
+          if (state.on){
             j5.color(state.color);
+          } else {
+            j5.stop().off();
           }
         },
         on: function(state, j5) {
-          console.log(state);
           if (state.on){
             j5.color(state.color);
             j5.on();
           } else {
-            j5.off();
+            j5.stop().off();
           }
         },
         blink: function(state, j5){
@@ -130,10 +132,10 @@ var GameSetup = {
           var colorId = j5.id;
           var data = {
               on: false,
-              blink: false
+              blink: false,
+              color: colorId
             };
           if (state.status === 'press'){
-            data.color = colorId;
             data.on = true;
           }
           store.dispatch(setJ5('rgb', data, 'game_light'));
@@ -155,6 +157,34 @@ var Game = function(){
   this.j5 = GameSetup.setUpj5();
 
   this.pieman = new Pieman();
+
+  var colors = ["red", "green", "red", "blue", "yellow"];
+
+  var i = 0;
+  function myLoop () {
+     setTimeout(function () {
+        var data = {
+          on: true,
+          blink: false,
+          color: colors[i]
+        };
+        if (colors[i] === undefined){
+          data.on = false;
+          data.color = "white";
+        }
+
+        store.dispatch(setJ5('rgb', data, 'game_light'));
+
+        i++;
+
+        if (i < colors.length+1) {
+           myLoop();
+        }
+     }, 1000)
+  }
+
+  myLoop();
+
 
 };
 
