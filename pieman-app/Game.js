@@ -16,11 +16,11 @@ var Game = function(config) {
   }
 
   this.state_cache = {
-    round: 0
+    round: null
   };
 
   // state tracking
-  this.rounds = 10;
+  this.rounds = 3;
 
   // set color sequence in redux (this is the source of truth for the game)
   this.sequence = this.setSequence(this.rounds);
@@ -34,7 +34,7 @@ var Game = function(config) {
   this.roundListener();
 
   // start game
-  this.playSequence();
+  //this.playSequence();
 };
 
 Game.prototype = {
@@ -67,7 +67,7 @@ Game.prototype = {
     }
 
     // dispatch to redux so it's accessible in other parts of the app
-    dispatch(setSequence(sequence));
+    store.dispatch(setSequence(sequence));
     return sequence;
   },
 
@@ -77,7 +77,8 @@ Game.prototype = {
   playSequence: function(round) {
     var colors = this.sequence;
     var i = 0;
-    console.log('Playing sequence, listener off');
+    // ---- turn off listener ---------------
+    console.log('Playing sequence, listener off...');
     store.dispatch(startListener(false));
 
     function ledLoop() {
@@ -88,24 +89,21 @@ Game.prototype = {
           color: colors[i]
         };
         console.log(colors[i]);
-        if (i === round) {
-          data.on = false;
-        }
         store.dispatch(setJ5('rgb', data, 'game_light'));
         i++;
-        if (i < round + 1) {
+        if (i <= round) {
           ledLoop();
         } else {
-          this.startListener();
+          setTimeout(function(){
+            data.on = false;
+            store.dispatch(setJ5('rgb', data, 'game_light'));
+            console.log('Listening to input now ...');
+            store.dispatch(startListener(true));
+          }, 1000);
         }
       }, 1000)
     }
     ledLoop();
-  },
-
-  startListener: function() {
-    console.log('Listening');
-    store.dispatch(startListener(true));
   }
 };
 

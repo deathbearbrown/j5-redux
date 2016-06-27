@@ -10,6 +10,7 @@ var initialState = {
 
 function piemanReducer(state, action) {
   state = state || initialState;
+
   if (action.type === types.ADVANCE_ROUND) {
     state.pressCount = 0;
     state.round++;
@@ -34,7 +35,9 @@ function piemanReducer(state, action) {
   }
 
   if (action.type === types.LISTENING_ON) {
+
     state.listening = action.on;
+    console.log(state);
     return state;
   }
 

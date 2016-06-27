@@ -11,6 +11,7 @@ var InitJ5 = require('../util/initJ5');
  * Note: you can also use 4 leds [red yellow, green, blue]
  */
 var RGBLed = function() {
+  console.log('hi');
   return new InitJ5({
     five: {
       class: five.Led.RGB,
@@ -41,8 +42,6 @@ var RGBLed = function() {
       },
       on: function(state, j5) {
         if (state.on) {
-          // set off for blink
-          j5.stop().off();
           j5.color(state.color);
           j5.on();
         } else {
@@ -51,7 +50,6 @@ var RGBLed = function() {
       },
       blink: function(state, j5) {
         if (state.blink) {
-          j5.stop().off();
           j5.blink();
         } else {
           j5.stop().off();

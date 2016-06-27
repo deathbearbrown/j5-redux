@@ -7,6 +7,7 @@
  */
 
 function listening(on) {
+  console.log(on);
   return {
     type: 'LISTENING_ON',
     on: on

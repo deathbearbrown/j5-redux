@@ -1,6 +1,6 @@
 'use strict';
 var five = require("johnny-five");
-var Pieman = require('./pieman-app');
+var Pieman = require('./pieman-app/Game');
 var Store = require('./pieman-app/store');
 var board = new five.Board();
 
@@ -18,7 +18,7 @@ board.on("ready", function() {
  // See the test folder for how to test an app using johnny-five :)
 
  this.repl.inject({
-  store: Store
+  store: Store.getState()
  });
 
 });

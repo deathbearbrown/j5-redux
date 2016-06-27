@@ -9,19 +9,23 @@ var gameListener = function(color, allstate){
   var round = allstate.pieman.round;
   var colors = allstate.pieman.sequence;
   var wantedColor = colors[pressCount];
-
+  console.log("i logic'n", round, pressCount);
   if (color === wantedColor) {
     if (round > pressCount) {
       // add press
       store.dispatch(gameActions.addPress());
-      console.log('correct!', wantedColor + ' is ' + color);
+      console.log('correct!', color + ' is ' + wantedColor);
     } else if (round === pressCount) {
+      if (pressCount === colors.length-1){
+        console.log('you won!');
+        return;
+      }
       //advance game
-      console.log('correct!', wantedColor + ' is ' + color + "! Advance game!");
+      console.log('correct!', color + ' is ' + wantedColor + "! Advance game!");
       store.dispatch(gameActions.advance());
     }
   } else {
-    console.log('Oh No!', wantedColor + ' is not ' + color);
+    console.log('Oh No!', color + ' is not ' + wantedColor);
     // you donked up
     var failLed = {
       on: true,
@@ -89,6 +93,7 @@ var buttons = function() {
         // only dispatch events if listener is set to true
         // otherwise you will interfere with the game sequence
         if (allState.pieman.listening) {
+          console.log('listening');
           var colorId = j5.id;
           var data = {
             on: false,
@@ -97,6 +102,7 @@ var buttons = function() {
           };
           if (state.status === 'press') {
             data.on = true;
+          } else if (state.status === 'release'){
             // game callback -------------------------------
             gameListener(colorId, allState);
           }
