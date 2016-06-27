@@ -1,5 +1,4 @@
 'use strict';
-var assign = require('object-assign');
 var types = require('../constants/actionTypes');
 
 var initialState = {};
