@@ -6,7 +6,7 @@ var store = require('../../boilerplate/store');
 var five = require('johnny-five');
 var setJ5Components = require('../../boilerplate/actions/j5ReduxActions').setJ5Components;
 
-describe("J5Components class", () => {
+describe("j5Redux class", () => {
   var buttons;
   var light;
   var board;
@@ -33,9 +33,9 @@ describe("J5Components class", () => {
           {
             id: 'rgb',
             pins: {
-              red: 6,
-              green: 5,
-              blue: 3
+              red: 'a5',
+              green: 'a6',
+              blue: 'b5'
             }
           }
         ]
