@@ -14,7 +14,6 @@ function listening(on) {
 }
 
 function resetGame() {
-  console.log('reset Game');
   return {
     type: 'RESET_GAME',
     data: {

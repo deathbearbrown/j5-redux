@@ -37,18 +37,22 @@ var Leds = require('./components/rgbLed');
  *
  * This can be run on any board, but the buttons and rgbLed components
  * will need to be updated with the appropriate pin #s
+ *
+ * @param {object} config - set rounds and maybe other stuff
+ *
  */
-var Game = function() {
+var Game = function(config) {
   if (!(this instanceof Game)) {
     return new Game();
   }
+  var spec = config || {};
 
   this.state_cache = {
     round: null
   };
 
   // state tracking
-  this.rounds = 1;
+  this.rounds = spec.rounds || 1;
 
   // set color sequence in redux (this is the source of truth for the game)
   this.sequence = this.setSequence(this.rounds);
