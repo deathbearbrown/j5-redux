@@ -7,7 +7,6 @@
  */
 
 function listening(on) {
-  console.log(on);
   return {
     type: 'LISTENING_ON',
     on: on
@@ -15,8 +14,15 @@ function listening(on) {
 }
 
 function resetGame() {
+  console.log('reset Game');
   return {
-    type: 'RESET_GAME'
+    type: 'RESET_GAME',
+    data: {
+      pressCount: 0,
+      round: 0,
+      listening: false,
+      newGame: false
+    }
   };
 }
 
@@ -45,11 +51,34 @@ function setSequence(colors) {
   };
 }
 
+function gameover(state) {
+  return {
+    type: 'SET_GAMEOVER',
+    data: {
+      listening: true,
+      gameover: state
+    }
+  };
+}
+
+function newGame() {
+  return {
+    type: 'NEW_GAME',
+    data: {
+      gameover: false,
+      newGame: true
+    }
+  };
+}
+
+
 module.exports = {
-  reset: resetGame,
-  listening: listening,
-  advance: advanceRound,
   addPress: addPress,
+  advance: advanceRound,
+  gameover: gameover,
+  listening: listening,
+  newGame: newGame,
+  reset: resetGame,
   resetPress: resetPress,
   setSequence: setSequence
 };

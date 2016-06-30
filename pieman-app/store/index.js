@@ -6,7 +6,8 @@ var defaultState = {
     listening: false,
     round: 0,
     pressCount: 0,
-    sequence: []
+    sequence: [],
+    gameover: false
   }
 };
 module.exports = configureStore(defaultState);

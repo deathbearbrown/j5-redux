@@ -1,10 +1,10 @@
 "use strict";
-require("./bootstrap");
+require("../bootstrap");
 
-var InitJ5 = require("../boilerplate/util/initJ5");
-var store = require('../boilerplate/store');
+var J5Redux = require("../../boilerplate/util/j5Redux");
+var store = require('../../boilerplate/store');
 var five = require('johnny-five');
-var setJ5Components = require('../boilerplate/actions/initJ5Actions').setJ5Components;
+var setJ5Components = require('../../boilerplate/actions/j5ReduxActions').setJ5Components;
 
 describe("J5Components class", () => {
   var buttons;
@@ -12,7 +12,6 @@ describe("J5Components class", () => {
   var board;
   var callback;
   var lightCallback;
-  var stubs = {};
   var spies = {};
 
 
@@ -20,14 +19,14 @@ describe("J5Components class", () => {
     board = newBoard();
 
     spies.Button = sandbox.spy(five, "Button");
-    spies.setUpRedux = sandbox.spy(InitJ5.initializers, "setUpRedux");
-    spies.setUpEvents = sandbox.spy(InitJ5.initializers, "setUpEvents");
-    spies.setUpListeners = sandbox.spy(InitJ5.initializers, "setUpListeners");
+    spies.setUpRedux = sandbox.spy(J5Redux.initializers, "setUpRedux");
+    spies.setUpEvents = sandbox.spy(J5Redux.initializers, "setUpEvents");
+    spies.setUpListeners = sandbox.spy(J5Redux.initializers, "setUpListeners");
 
     callback = sinon.spy();
     lightCallback = sinon.spy();
 
-    light = new InitJ5({
+    light = new J5Redux({
       five: {
         class: five.Led.RGB,
         args: [
@@ -51,7 +50,7 @@ describe("J5Components class", () => {
       }
     });
 
-    buttons = new InitJ5({
+    buttons = new J5Redux({
       five: {
         class: five.Button,
         args: [
@@ -132,6 +131,17 @@ describe("J5Components class", () => {
     expect(buttons).to.have.property("store_name");
   });
 
+  it("buttons.getj5Objects() will return 2 j5 buttons ", function() {
+    var j5Objects = buttons.getj5Objects();
+    expect(j5Objects.length).to.equal(2);
+  });
+
+  it("buttons.getState() returns the button state in redux ", function() {
+    var getState = buttons.getState();
+    var reduxState = store.getState().J5.game_buttons;
+    expect(getState).to.be.eql(reduxState);
+  });
+
   it("Initialized two Button instances", function() {
     expect(spies.Button.callCount).to.equal(2);
   });
@@ -164,6 +174,13 @@ describe("J5Components class", () => {
     var state = store.getState().J5.game_buttons.white;
     expect(state.status).to.equal('monkey');
     expect(callback.called).to.be.true;
+  });
+
+  it("buttons.resetReduxState() will reset the state of each button in redux to original state", function() {
+    store.dispatch(setJ5Components('white', { status: 'monkey' }, 'game_buttons'));
+    buttons.resetReduxState();
+    var state = store.getState().J5.game_buttons.white;
+    expect(state.status).to.equal(null);
   });
 
   it("button listener will dispatch to light state, light listener will fire", function() {

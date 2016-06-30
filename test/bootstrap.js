@@ -1,3 +1,4 @@
+
 // Unlocks useful features in Johnny-Five
 process.env.IS_TEST_MODE = true;
 
@@ -61,4 +62,4 @@ global.cleanup = cleanup;
 
 // Internal/Module Deps
 //
-// global.initJ5 = require("../boilerplate/util/initJ5");
+// global.j5Redux = require("../boilerplate/util/j5Redux");

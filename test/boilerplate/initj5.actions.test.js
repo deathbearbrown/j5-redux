@@ -1,10 +1,10 @@
 'use strict';
-require('./bootstrap');
-var actions = require('../boilerplate/actions/initJ5Actions');
-var types = require('../boilerplate/constants/actionTypes');
+require('../bootstrap');
+var actions = require('../../boilerplate/actions/j5ReduxActions');
+var types = require('../../boilerplate/constants/actionTypes');
 
-describe('initJ5 actions', () => {
-  it('should create an action to change state of an initJ5', function() {
+describe('j5Redux actions', () => {
+  it('should create an action to change state of an j5Redux', function() {
     var id = 'gremlins';
     var data = {
           id: 'cool',
@@ -23,7 +23,7 @@ describe('initJ5 actions', () => {
     expect(actions.setJ5Components(id, data, name)).to.eql(expectedAction);
   });
 
-  it('should create an action to add an initJ5', function() {
+  it('should create an action to add an j5Redux', function() {
     var id = 'gremlins';
     var data = {
           id: 'cool',

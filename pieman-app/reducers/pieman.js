@@ -5,7 +5,9 @@ var initialState = {
   listening: false,
   round: 0,
   pressCount: 0,
-  sequence: []
+  sequence: [],
+  gameover: false,
+  newGame: false
 };
 
 function piemanReducer(state, action) {
@@ -22,28 +24,31 @@ function piemanReducer(state, action) {
     return state;
   }
 
+  if (action.type === types.NEW_GAME) {
+    return Object.assign({}, state, action.data);
+  }
+
   if (action.type === types.RESET_PRESS) {
     state.pressCount = 0;
     return state;
   }
 
   if (action.type === types.RESET_GAME) {
-    state.sequence = [];
-    state.pressCount = 0;
-    state.round = 0;
-    return state;
+    return Object.assign({}, state, action.data);
   }
 
   if (action.type === types.LISTENING_ON) {
-
     state.listening = action.on;
-    console.log(state);
     return state;
   }
 
   if (action.type === types.SET_SEQUENCE) {
     state.sequence = action.sequence;
     return state;
+  }
+
+  if (action.type === types.SET_GAMEOVER) {
+    return Object.assign({}, state, action.data);
   }
 
   return state;

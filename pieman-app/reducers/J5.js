@@ -12,8 +12,10 @@ function j5Reducer(state, action) {
   }
 
   if (action.type === types.SET_J5) {
-    var oldState = state[action.name][action.id];
-    state[action.name][action.id] = Object.assign({}, oldState, action.data);
+    if (state[action.name]){
+      var oldState = state[action.name][action.id];
+      state[action.name][action.id] = Object.assign({}, oldState, action.data);
+    }
     return state;
   }
 
