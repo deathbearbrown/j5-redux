@@ -22,9 +22,9 @@ var RGBLed = function() {
       args: [{
         id: 'rgb',
         pins: {
-          red: 'a5',
-          green: 'a6',
-          blue: 'b5'
+          red: 'b6',
+          green: 'b5',
+          blue: 'a6'
         }
       }]
     },

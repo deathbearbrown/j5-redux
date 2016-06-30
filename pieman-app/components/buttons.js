@@ -85,16 +85,16 @@ var buttons = function() {
       class: five.Button,
       args: [{
         id: 'red',
-        pin: 'a4'
-      }, {
-        id: 'yellow',
         pin: 'a3'
       }, {
+        id: 'yellow',
+        pin: 'a4'
+      }, {
         id: 'green',
-        pin: 'b4'
+        pin: 'b3'
       }, {
         id: 'blue',
-        pin: 'b3'
+        pin: 'b4'
       }]
     },
     store: {

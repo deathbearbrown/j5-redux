@@ -18,32 +18,19 @@ global.Sensor = five.Sensor;
 
 
 function newBoard(pins) {
+  if (pins) {
+    pins.forEach(function(pin) {
+      Object.assign(pin, {
+        mode: 1,
+        value: 0,
+        report: 1,
+        analogChannel: 127
+      });
+    });
+  }
+
   var io = new MockFirmata({
-    pins: [
-      // Port A
-      { supportedModes: [0, 1, 6], analogChannel: 127, mode: 0, report: 0, value: 0 },
-      { supportedModes: [0, 1, 6], analogChannel: 127, mode: 0, report: 0, value: 0 },
-      { supportedModes: [0, 1 ], analogChannel: 127, mode: 0, report: 0, value: 0 },
-      { supportedModes: [0, 1 ], analogChannel: 127, mode: 0, report: 0, value: 0 },
-      { supportedModes: [0, 1, 2 ], analogChannel: 0, mode: 0, report: 0, value: 0 },
-      { supportedModes: [0, 1, 3, 4, 10 ], analogChannel: 127, mode: 0, report: 0, value: 0 },
-      { supportedModes: [0, 1, 3, 4, 10 ], analogChannel: 127, mode: 0, report: 0, value: 0 },
-      { supportedModes: [0, 1, 2 ], analogChannel: 1, mode: 0, report: 0, value: 0 },
-      // Port B
-      { supportedModes: [0, 1, 2 , 6], analogChannel: 2, mode: 0, report: 0, value: 0 },
-      { supportedModes: [0, 1, 2 , 6], analogChannel: 3, mode: 0, report: 0, value: 0 },
-      { supportedModes: [0, 1, 2 ], analogChannel: 4, mode: 0, report: 0, value: 0 },
-      { supportedModes: [0, 1, 2 ], analogChannel: 5, mode: 0, report: 0, value: 0 },
-      { supportedModes: [0, 1, 2 ], analogChannel: 6, mode: 0, report: 0, value: 0 },
-      { supportedModes: [0, 1, 2, 3, 4, 10 ], analogChannel: 7, mode: 0, report: 0, value: 0 },
-      { supportedModes: [0, 1, 2, 3, 4, 10 ], analogChannel: 8, mode: 0, report: 0, value: 0 },
-      { supportedModes: [0, 1, 2, 3 ], analogChannel: 9, mode: 0, report: 0, value: 0 },
-      // LEDs
-      { supportedModes: [1], analogChannel: 127, mode: 0, report: 0, value: 0 },
-      { supportedModes: [1], analogChannel: 127, mode: 0, report: 0, value: 0 },
-      { supportedModes: [1], analogChannel: 127, mode: 0, report: 0, value: 0 },
-      { supportedModes: [1], analogChannel: 127, mode: 0, report: 0, value: 0 },
-    ]
+   pins: pins
   });
 
   io.SERIAL_PORT_IDs.DEFAULT = 0x08;
