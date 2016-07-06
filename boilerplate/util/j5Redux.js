@@ -4,6 +4,10 @@ var isEqual = require('lodash.isequal');
 var setJ5Components = require('../actions/j5ReduxActions').setJ5Components;
 var addJ5Components = require('../actions/j5ReduxActions').addJ5Components;
 
+/**
+ * The j5-redux class instantiates Johnny Five components and sets up a reference to them in
+ * the redux store with a default state.
+ */
 
 var initializers = {
   /**
@@ -50,7 +54,7 @@ var initializers = {
    * Get what's stored in redux for this class
    * @param  {string} store_name key everything in the class is stored under
    * @param  {string} id         j5_object id
-   * @return {object}            redux state
+   * @returns {object}            redux state
    */
   getStore: function(store_name, id) {
     var state = store.getState();
@@ -84,7 +88,7 @@ var initializers = {
 };
 
 /**
- * J5Components
+ * J5Redux
  * @param {object} spec object
  * @param {object} spec.five - an object containing a Johnny five class & an array
  *                           arguments to instantiate it
@@ -153,13 +157,13 @@ var initializers = {
         }
       }
     }
- * @returns {Class J5Component} J5Component class
+ * @returns {Class J5Redux} J5Redux class
  */
 
 
-var Component = function(spec) {
-  if (!(this instanceof Component)) {
-    return new Component();
+var J5Redux = function(spec) {
+  if (!(this instanceof J5Redux)) {
+    return new J5Redux();
   }
   // set up cache ----------------------------
   this.state_cache = {};
@@ -190,12 +194,12 @@ var Component = function(spec) {
 
 };
 
-Component.prototype = {
+J5Redux.prototype = {
   /**
    * Get All j5 Components created inside here
    * note: if you manipulate them outside of redux state managment
    * the state will be out of sync
-   * @return {object} - {j5Id: j5Component}
+   * @returns {object} - {j5Id: j5Component}
    */
   getJ5Objects: function() {
     return this.j5_objects;
@@ -203,7 +207,7 @@ Component.prototype = {
   /**
    * Get the redux store values created in here. Helpful for debugging
    * @param  {string} j5_object_id - retrieve by id
-   * @return {object} - redux state
+   * @returns {object} - redux state
    */
   getState: function(j5_object_id) {
     if (j5_object_id) {
@@ -211,9 +215,17 @@ Component.prototype = {
     }
     return store.getState('J5')[this.store_name];
   },
+  /**
+   * log out state for debugging
+   * @returns {void}
+   */
   log: function() {
     console.log(this.getState());
   },
+  /**
+   * Reset redux state to defaults
+   * @returns {void}
+   */
   resetReduxState: function(){
     var fiveIDArray = Object.keys(this.j5_objects);
     var defaults = this.default_store;
@@ -225,7 +237,7 @@ Component.prototype = {
 
 // if test mode add initializer object to the export so I can test it :)
 if (process.env.IS_TEST_MODE) {
-  Component.initializers = initializers;
+  J5Redux.initializers = initializers;
 }
 
-module.exports = Component;
+module.exports = J5Redux;
