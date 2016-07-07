@@ -191,7 +191,6 @@ var J5Redux = function(spec) {
     this.unsubscribe = store.subscribe(listeners);
     listeners();
   }
-
 };
 
 J5Redux.prototype = {
@@ -210,10 +209,11 @@ J5Redux.prototype = {
    * @returns {object} - redux state
    */
   getState: function(j5_object_id) {
+    var state = store.getState('J5');
     if (j5_object_id) {
-      return store.getState('J5')[this.store_name][j5_object_id];
+      return state.J5[this.store_name][j5_object_id];
     }
-    return store.getState('J5')[this.store_name];
+    return state.J5[this.store_name];
   },
   /**
    * log out state for debugging
